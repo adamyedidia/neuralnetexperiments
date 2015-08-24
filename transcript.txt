@@ -1,0 +1,24 @@
+AttributeError: 'list' object has no attribute 'inSliceFrom'
+>>> net.connections[net.modulesSorted[1]][0].inSliceFrom
+0
+>>> net.connections[net.modulesSorted[1]][0].inSliceTo
+2
+>>> net.connections[net.modulesSorted[1]][0].params
+array([-1.7540423 , -0.01931373])
+>>> net.connections[net.modulesSorted[2]][0].params
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+IndexError: list index out of range
+>>> net.connections[net.modulesSorted[0]][0].params
+array([-0.93923372,  0.54421317, -0.19769262,  0.54199005])
+>>> net.connections[net.modulesSorted[0]][0].inSliceFrom
+0
+>>> net.connections[net.modulesSorted[0]][0].inSliceTo
+2
+>>> net.connections[net.modulesSorted[0]][0].outSliceFrom
+0
+>>> net.connections[net.modulesSorted[0]][0].outSliceTo
+2
+>>> net.connections[net.modulesSorted[0]][0].inmod.outputbuffer
+array([[ 0.,  0.]])
+>>> net.connections[net.modulesSorted[0]][0].

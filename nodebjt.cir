@@ -1,0 +1,25 @@
+A neural net node made out of BJTs!
+
+* These are the inputs to the node (in a big net, they'd be other nodes!)
+
+I1 0 1 1mA
+M1 1 1 0 MyBJT
+
+I2 0 2 2mA
+M2 2 2 0 0 MyBJT
+
+I3 0 3 9mA
+M3 3 3 0 0 MyBJT
+
+* This is the node itself
+
+V1 4 0 5v
+R1 4 5 1
+R2 4 6 1
+R3 4 7 1
+M4 5 1 8 0 MyBJT
+M5 2 6 8 0 MyBJT
+M6 7 3 8 0 MyBJT
+R4 8 0 0.001
+
+.MODEL MyBJT NPN (BF=100 VAF=0.8)
