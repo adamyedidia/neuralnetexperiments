@@ -14,16 +14,16 @@ class Node:
         self.dFdW = dFdW   
         self.ID = ID
         # a list of the outputs of this node for each of the input-sets in the mini-batch     
-        self.outs = None
+        self.out = None
         self.dCdOut = None
-        self.dCdW = eone
+        self.dCdW = None
             
-    def computeOuts(self, listOfInputLists):
+    def computeOut(self, listOfInputs):
         
         # For each input-set, give the inputs from the previous layer
-        self.outs = [self.f(listOfInputs, self.weights) for listOfInputs in listOfInputLists]
+        self.out = self.f(listOfInputs, self.weights)
         
-        return self.outs
+        return self.out
         
     def computeOutDerivativeFromCost(self, trueSolutions, allNodeOuts, dCdX):
         self.dCdOut = dCdX(allNodeOuts, trueSolutions, self.ID)
@@ -47,10 +47,10 @@ class Node:
             
 class InputNode(Node):
     def __init__(self, outs):
-        self.outs = outs
+        self.out = out
         
-    def setOuts(self, newOuts):
-        self.outs = newOuts      
+    def setOuts(self, newOut):
+        self.out = newOut      
             
 class Layer:
     def __init__(self, listOfNodes, prevLayer, nextLayer):
@@ -63,13 +63,12 @@ class Layer:
         for node in self.listOfNodes:
             node.computeOut(self.prevLayer.outs)
         
-        self.outs = [[node.outs[i] for node in self.listOfNodes] for i, outs in \
-                enumerate(self.listOfNodes[0].outs)])
+        self.outs = [node.out for node in self.listOfNodes]
                      
     def backPropagate(self, trueSolutions, dCdX):        
         if self.nextLayer == None:
             for node in self.listOfNodes:
-                node.computeOutDerivativeFromCost(trueSolutions, [otherNode.outs for otherNode in self.listOfNodes], dCdX)
+                node.computeOutDerivativeFromCost(trueSolutions, [otherNode.out for otherNode in self.listOfNodes], dCdX)
         
         else:
             for node in self.listOfNodes:
@@ -92,7 +91,7 @@ class InputLayer(Layer):
         print len(inputs), len(self.listOfNodes)
         assert len(inputs) == len(self.listOfNodes)
         for i, inp in enumerate(inputs):
-            self.listOfNodes[i].setOuts(inp)
+            self.listOfNodes[i].setOut(inp)
     
 class Network:
     def __init__(self, listOfLayers, costFunc, dCdX):
@@ -216,24 +215,12 @@ def crossEntropyCost(proposedSolutions, trueSolutions):
         
 def crossEntropyCostPrime(proposedSolutions, trueSolutions, outputIndex):
     numOutputs = len(proposedSolutions)
-    
-    print proposedSolutions
-
-    if numOutputs > 0:
-        batchSize = len(proposedSolutions[0])
 
     overallSum = 0
-    
-    print len(proposedSolutions)
-    print len(proposedSolutions[0])
-    print len(trueSolutions)
-    print len(trueSolutions[0])
-    print trueSolutions
 
-    for j in range(batchSize):
-        overallSum += proposedSolutions[outputIndex][j] / trueSolutions[outputIndex][j]
-        overallSum -= (1 - proposedSolutions[outputIndex][j]) / \
-            (1 - trueSolutions[outputIndex][j])
+    overallSum += proposedSolutions[outputIndex][j] / trueSolutions[outputIndex][j]
+    overallSum -= (1 - proposedSolutions[outputIndex][j]) / \
+        (1 - trueSolutions[outputIndex][j])
 
     return overallSum    
         
