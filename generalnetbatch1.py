@@ -400,9 +400,9 @@ print fourth, [0.1, 0.9], crossEntropyCost(fourth, [0.1, 0.9])
 print ''
 
 print network.feedForward([0.1, 0.1]), [0.1, 0.9], crossEntropyCost(network.feedForward([0.1, 0.1]), [0.1, 0.9])
-print network.feedForward([0.1, 0.9]), [0.9, 0.1], crossEntropyCost(network.feedForward([0.1, 0.1]), [0.9, 0.1])
-print network.feedForward([0.9, 0.1]), [0.9, 0.1], crossEntropyCost(network.feedForward([0.1, 0.1]), [0.9, 0.1])
-print network.feedForward([0.9, 0.9]), [0.1, 0.9], crossEntropyCost(network.feedForward([0.1, 0.1]), [0.1, 0.9])
+print network.feedForward([0.1, 0.9]), [0.9, 0.1], crossEntropyCost(network.feedForward([0.1, 0.9]), [0.9, 0.1])
+print network.feedForward([0.9, 0.1]), [0.9, 0.1], crossEntropyCost(network.feedForward([0.9, 0.1]), [0.9, 0.1])
+print network.feedForward([0.9, 0.9]), [0.1, 0.9], crossEntropyCost(network.feedForward([0.9, 0.9]), [0.1, 0.9])
 
 #print trainingList
 
